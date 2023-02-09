@@ -1,0 +1,226 @@
+<div class="row p-2 justify-content-center d-flex  box">
+    <div class="col-4 card justify-content-center p-0 m-0">
+      <div class="text-center text-info">
+        <h1>Registration form</h1>
+      </div>
+      <div class="card-body">
+        <form class="justify-content-center" [formGroup]="profileForm">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              name="firstName"
+              formControlName="firstName"
+              required
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                (profileFormControl['firstName'].touched &&
+                  profileFormControl['firstName'].pristine) ||
+                (submitted && profileFormControl['firstName'].pristine)
+              "
+            >
+              FirstName is required
+            </span>
+          </div>
+  
+          <div class="form-group">
+            <label for="username">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              class="form-control"
+              name="lastName"
+              formControlName="lastName"
+              required
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                (profileFormControl['lastName'].touched &&
+                  profileFormControl['lastName'].pristine) ||
+                (submitted && profileFormControl['lastName'].pristine)
+              "
+            >
+              Last Name is required
+            </span>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">Mail</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              name="email"
+              formControlName="email"
+              required
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                (profileFormControl['email'].touched &&
+                  profileFormControl['email'].pristine) ||
+                (submitted &&
+                  profileFormControl['email'].pristine &&
+                  profileFormControl['email'].invalid)
+              "
+            >
+              Email is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="birthDate">Birth of Date</label>
+            <input
+              type="date"
+              id="birthDate"
+              class="form-control"
+              name="birthDate"
+              formControlName="birthDate"
+              [max]="today"
+              required
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                (profileFormControl['birthDate'].touched &&
+                  profileFormControl['birthDate'].pristine) ||
+                (submitted &&
+                  profileFormControl['birthDate'].pristine &&
+                  profileFormControl['birthDate'].invalid)
+              "
+            >
+              Date of Birth is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="mobileNo">Phone no</label>
+            <input
+              type="text"
+              id="mobileNo"
+              class="form-control"
+              name="mobileNo"
+              (keypress)="blockCharacter($event)"
+              maxlength="10"
+              minlength="10"
+              formControlName="mobileNo"
+              required
+            />
+            <span
+              class="text-danger"
+              *ngIf="
+                (profileFormControl['mobileNo'].invalid &&
+                  submitted &&
+                  profileFormControl['mobileNo'].pristine) ||
+                (profileFormControl['mobileNo'].touched &&
+                  profileFormControl['mobileNo'].pristine)
+              "
+            >
+              MobileNo is required
+            </span>
+          </div>
+          <div class="form-group mb-3 mt-3">
+            <div class="row">
+              <div class="col-lg-4 m-0">
+                <label > Gender </label>
+              </div>
+              <div class="radio col-lg-4 m-0 p-0" *ngFor="let gender of genders">
+                <input
+                  type="radio"
+                  name="gender"
+                  [id]="gender.value"
+                  [value]="gender.value"
+                  formControlName="gender"
+                  required
+                />
+                <label  class="ms-2" [for]="gender.value">{{
+                  gender.name
+                }}</label>
+                <br />
+              </div>
+              <span
+                class="text-danger"
+                *ngIf="
+                  (profileFormControl['gender'].touched &&
+                    profileFormControl['gender'].pristine) ||
+                  (profileFormControl['gender'].invalid &&
+                    submitted &&
+                    profileFormControl['gender'].pristine)
+                "
+              >
+                Gender is required
+              </span>
+            </div>
+          </div>
+          <div class="form-group mb-3 mt-3">
+              <div class="row">
+                <div class="col-lg-4 m-0">
+                  <label > Roles </label>
+                </div>
+                <div class="radio col-lg-2 m-0 p-0" *ngFor="let role of roles">
+                  <input
+                    type="radio"
+                    name="roles"
+                    [id]="role.value"
+                    [value]="role.value"
+                    formControlName="roles"
+                    required
+                  />
+                  <label  class="ms-2" [for]="role.value">{{
+                      role.name
+                  }}</label>
+                  <br />
+                </div>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    (profileFormControl['roles'].touched &&
+                      profileFormControl['roles'].pristine) ||
+                    (profileFormControl['roles'].invalid &&
+                      submitted &&
+                      profileFormControl['roles'].pristine)
+                  "
+                >
+                  Roles is required
+                </span>
+              </div>
+            </div>
+          <div class="form-group">
+            <input type="checkbox" formControlName="isToRead" id="isToRead" />
+            <label for="isToRead"
+              >&nbsp; I agree to our
+              <a target="_blank" href="/">Terms of use</a> and
+              <a target="_blank" href="/">Privacy Policy</a>.</label
+            >
+            <br />
+            <span
+              class="text-danger"
+              *ngIf="
+                (profileFormControl['isToRead'].invalid &&
+                  profileFormControl['isToRead'].pristine &&
+                  profileFormControl['isToRead'].touched) ||
+                (profileFormControl['isToRead'].invalid &&
+                  submitted &&
+                  profileFormControl['isToRead'].pristine)
+              "
+            >
+              Please confirm Agreement
+            </span>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <button
+          class="btn btn-info text-white w-100"
+          (click)="onSubmit()"
+          type="submit"
+        >
+          Signup
+        </button>
+      </div>
+    </div>
+  </div>
