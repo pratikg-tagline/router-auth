@@ -21,7 +21,7 @@ export class AuthenticationService {
     {
       email: 'user@gmail.com',
       userName: 'user',
-      password: '1234567',
+      password: '123',
       role: 'user',
     },
   ];
@@ -35,8 +35,5 @@ export class AuthenticationService {
    return of(this.users.find((res)=>res.email === users.email && res.password === users.password))
   }
 
-  isContentRole(){
-    return false
-  }
 
 }

@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('email',res.email)
           localStorage.setItem('role',res.role);
           this.router.navigate(['admin'])
-          this.router.navigate(['user'])
         }else {
           this.toastr.error('Please Enter Valid Email Address');
         }
